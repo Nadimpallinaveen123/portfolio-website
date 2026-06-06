@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://portfolio-website-26h7.onrender.com';
-const baseURL = import.meta.env.VITE_API_BASE_URL || `${API_URL}/api`;
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 export const api = axios.create({ baseURL });
 
