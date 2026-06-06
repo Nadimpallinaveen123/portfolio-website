@@ -12,6 +12,7 @@ public class FrontendRedirectController {
             "/skills",
             "/experience",
             "/projects",
+            "/services",
             "/contact",
             "/admin"
     })

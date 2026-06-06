@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
   BarChart3,
+  BriefcaseBusiness,
   CheckCircle2,
   Download,
   ExternalLink,
@@ -35,6 +36,7 @@ import {
   navItems,
   profile,
   projects,
+  serviceOfferings,
   skillGroups,
   technologyLogos,
   techStack,
@@ -100,6 +102,7 @@ function App() {
             <Route path="/skills" element={<SkillsPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/admin" element={<AdminPage />} />
           </Routes>
@@ -216,6 +219,10 @@ function HomePage({ onResume }) {
                 <ArrowRight size={18} />
                 View Projects
               </Link>
+              <Link to="/services" className="btn-secondary h-12 border-white/30 bg-white/[0.12] text-white hover:bg-white/[0.18]">
+                <BriefcaseBusiness size={18} />
+                Freelance Services
+              </Link>
             </div>
           </div>
 
@@ -227,9 +234,9 @@ function HomePage({ onResume }) {
                 </div>
                 <div>
                   <p className="text-sm font-bold uppercase text-teal-100">Available for opportunities</p>
-                  <p className="mt-2 text-lg font-black">Senior-ready Java Full Stack profile</p>
+                  <p className="mt-2 text-lg font-black">Java Full Stack Specialist</p>
                   <p className="mt-2 text-sm leading-6 text-slate-200">
-                    Replace this polished placeholder with your professional photo when ready.
+                    ✨ Java Full Stack Developer | Microservices & Cloud Innovator | AI-Driven Productivity
                   </p>
                 </div>
               </div>
@@ -408,6 +415,56 @@ function ProjectsPage() {
             <ProjectList title="Key Achievements" items={project.achievements} />
           </motion.article>
         ))}
+      </div>
+    </motion.section>
+  );
+}
+
+function ServicesPage() {
+  return (
+    <motion.section className="section" {...pageMotion}>
+      <div className="flex flex-wrap items-end justify-between gap-5">
+        <SectionTitle eyebrow="Freelance Services" title="Practical Java and React delivery for small teams and growing businesses" />
+        <Link to="/contact" className="btn-primary h-11">
+          <Send size={17} />
+          Start a Project
+        </Link>
+      </div>
+
+      <div className="mt-10 grid gap-5 md:grid-cols-2">
+        {serviceOfferings.map((service) => (
+          <motion.article
+            key={service.title}
+            whileHover={{ y: -5 }}
+            className="rounded border border-black/10 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5"
+          >
+            <div className="flex items-start gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded bg-accent/10 text-accent">
+                <service.icon size={25} />
+              </div>
+              <div>
+                <h2 className="text-xl font-black">{service.title}</h2>
+                <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">{service.summary}</p>
+              </div>
+            </div>
+            <div className="mt-5 grid gap-2 sm:grid-cols-2">
+              {service.items.map((item) => (
+                <p key={item} className="flex items-center gap-2 rounded bg-slate-50 px-3 py-2 text-sm font-semibold dark:bg-white/8">
+                  <CheckCircle2 className="shrink-0 text-accent" size={16} />
+                  {item}
+                </p>
+              ))}
+            </div>
+          </motion.article>
+        ))}
+      </div>
+
+      <div className="mt-8 rounded border border-black/10 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <h2 className="text-xl font-black">Available for freelance work</h2>
+        <p className="mt-3 max-w-3xl leading-8 text-slate-600 dark:text-slate-300">
+          I can help with new feature development, backend API work, React UI implementation, deployment fixes,
+          and production support for Java full stack applications.
+        </p>
       </div>
     </motion.section>
   );

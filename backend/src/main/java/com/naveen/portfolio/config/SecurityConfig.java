@@ -43,6 +43,7 @@ public class SecurityConfig {
                                 "/skills",
                                 "/experience",
                                 "/projects",
+                                "/services",
                                 "/contact",
                                 "/admin",
                                 "/assets/**",

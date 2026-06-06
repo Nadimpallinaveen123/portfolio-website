@@ -209,12 +209,40 @@ export const projects = [
   }
 ];
 
+export const serviceOfferings = [
+  {
+    title: 'Full Stack Web Applications',
+    icon: Code2,
+    summary: 'End-to-end business web apps using Spring Boot, React, REST APIs, authentication, and database-backed workflows.',
+    items: ['Admin dashboards', 'Customer portals', 'Role-based access', 'Responsive UI']
+  },
+  {
+    title: 'Backend API Development',
+    icon: ServerCog,
+    summary: 'Production-ready Java APIs with validation, security, persistence, and clean service boundaries.',
+    items: ['Spring Boot APIs', 'JWT security', 'PostgreSQL/MySQL', 'API documentation']
+  },
+  {
+    title: 'Cloud Deployment Support',
+    icon: Cloud,
+    summary: 'Deployment setup and troubleshooting for Java and React applications on cloud platforms.',
+    items: ['Render deployment', 'Docker setup', 'Environment variables', 'Production debugging']
+  },
+  {
+    title: 'Maintenance & Enhancements',
+    icon: Workflow,
+    summary: 'Feature additions, bug fixes, performance improvements, and production issue analysis for existing apps.',
+    items: ['Bug fixing', 'Feature delivery', 'Code cleanup', 'Release support']
+  }
+];
+
 export const navItems = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Skills', to: '/skills' },
   { label: 'Experience', to: '/experience' },
   { label: 'Projects', to: '/projects' },
+  { label: 'Services', to: '/services' },
   { label: 'Contact', to: '/contact' },
   { label: 'Admin', to: '/admin' }
 ];
