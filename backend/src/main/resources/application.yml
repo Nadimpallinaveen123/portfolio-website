@@ -1,0 +1,65 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: naveen-portfolio
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:backend/.env[.properties]
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/portfolio}
+    username: ${SPRING_DATASOURCE_USERNAME:portfolio_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:portfolio_pass}
+    # Jakarta persistence URL fallback (some Hibernate versions look for this key)
+    jakarta:
+      persistence:
+        jdbc:
+          url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/portfolio}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        format_sql: false
+        # Force a dialect when JDBC metadata is unavailable at startup
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
+          starttls:
+            enable: true
+            required: true
+
+app:
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
+  jwt:
+    secret: ${JWT_SECRET:change-this-local-development-secret-change-this-local-development-secret}
+    issuer: naveen-portfolio
+    admin-token-minutes: 480
+    download-token-minutes: 15
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:change-this-admin-password}
+  owner-email: ${OWNER_EMAIL:nadimpallinaveen2@gmail.com}
+  resume:
+    classpath-location: resume/Naveen_Nadimpalli_Resume.pdf
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

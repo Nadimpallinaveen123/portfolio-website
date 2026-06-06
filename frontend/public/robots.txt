@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://naveen-java-fullstack.vercel.app/sitemap.xml

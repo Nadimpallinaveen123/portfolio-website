@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: naveen-portfolio-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/analytics/metrics
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SPRING_MAIL_USERNAME
+        sync: false
+      - key: SPRING_MAIL_PASSWORD
+        sync: false
+      - key: OWNER_EMAIL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
