@@ -2,8 +2,7 @@ services:
   - type: web
     name: naveen-portfolio-backend
     runtime: docker
-    rootDir: .
-    dockerfilePath: backend/Dockerfile
+    dockerfilePath: ./Dockerfile
     plan: free
     healthCheckPath: /api/analytics/metrics
     envVars:
