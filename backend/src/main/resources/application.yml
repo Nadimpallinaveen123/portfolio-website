@@ -58,7 +58,7 @@ app:
     password: ${ADMIN_PASSWORD:change-this-admin-password}
   owner-email: ${OWNER_EMAIL:nadimpallinaveen2@gmail.com}
   resume:
-    classpath-location: resume/Naveen_Nadimpalli_Resume.pdf
+    classpath-location: resume/NaveenNadimpalli_JFS_updated_resume.pdf
 
 springdoc:
   swagger-ui:

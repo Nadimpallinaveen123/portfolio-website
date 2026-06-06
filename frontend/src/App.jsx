@@ -620,7 +620,7 @@ function ResumeDownloadModal({ open, onClose }) {
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'Naveen_Nadimpalli_Resume.pdf');
+      link.setAttribute('download', 'NaveenNadimpalli_JFS_updated_resume.pdf');
       document.body.appendChild(link);
       link.click();
       link.remove();

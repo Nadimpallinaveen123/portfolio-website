@@ -57,7 +57,7 @@ public class ResumeController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-                        .filename("Naveen_Nadimpalli_Resume.pdf")
+                        .filename("NaveenNadimpalli_JFS_updated_resume.pdf")
                         .build()
                         .toString())
                 .body(resource);

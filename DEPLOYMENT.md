@@ -96,7 +96,7 @@ VITE_GA_ID=<optional-google-analytics-id>
 Replace:
 
 ```text
-backend/src/main/resources/resume/Naveen_Nadimpalli_Resume.pdf
+backend/src/main/resources/resume/NaveenNadimpalli_JFS_updated_resume.pdf
 ```
 
 with your real resume before deploying.

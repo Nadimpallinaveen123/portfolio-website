@@ -78,7 +78,7 @@ docker compose up --build
 
 ## Production Notes
 
-Place your real resume PDF at `backend/src/main/resources/resume/Naveen_Nadimpalli_Resume.pdf` before deploying.
+Place your real resume PDF at `backend/src/main/resources/resume/NaveenNadimpalli_JFS_updated_resume.pdf` before deploying.
 
 Never commit production secrets. Use Vercel, Render, and Supabase environment variables.
 
