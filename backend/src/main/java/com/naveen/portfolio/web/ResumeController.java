@@ -35,7 +35,7 @@ public class ResumeController {
     @PostMapping("/request-otp")
     public OtpRequestedResponse requestOtp(@Valid @RequestBody ResumeOtpRequest request) {
         Long recruiterId = resumeService.requestOtp(request);
-        return new OtpRequestedResponse(recruiterId, "OTP sent to recruiter email");
+        return new OtpRequestedResponse(recruiterId, "OTP request accepted. Please check your email shortly.");
     }
 
     @PostMapping("/verify-otp")
@@ -63,4 +63,3 @@ public class ResumeController {
                 .body(resource);
     }
 }
-

@@ -10,6 +10,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -35,7 +39,17 @@ public class EmailService {
         this.ownerEmail = ownerEmail;
     }
 
-    public void sendOtp(String to, String otp) {
+    @Async("emailTaskExecutor")
+    @Retryable(
+            retryFor = EmailDeliveryException.class,
+            maxAttemptsExpression = "${app.email.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.email.retry.initial-delay-ms:2000}",
+                    multiplierExpression = "${app.email.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.email.retry.max-delay-ms:15000}"
+            )
+    )
+    public void sendOtpAsync(String to, String otp) {
         sendRequired(
                 to,
                 "OTP for Naveen Nadimpalli Resume Download",
@@ -47,12 +61,22 @@ public class EmailService {
         );
     }
 
-    public void notifyOwner(RecruiterDetails recruiter) {
+    @Async("emailTaskExecutor")
+    @Retryable(
+            retryFor = EmailDeliveryException.class,
+            maxAttemptsExpression = "${app.email.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.email.retry.initial-delay-ms:2000}",
+                    multiplierExpression = "${app.email.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.email.retry.max-delay-ms:15000}"
+            )
+    )
+    public void notifyOwnerAsync(RecruiterDetails recruiter) {
         if (!StringUtils.hasText(ownerEmail)) {
             log.warn("OWNER_EMAIL is not configured. Skipping owner notification.");
             return;
         }
-        sendOptional(
+        sendRequired(
                 ownerEmail,
                 "Resume verified by recruiter",
                 """
@@ -75,12 +99,22 @@ public class EmailService {
         );
     }
 
-    public void notifyContact(String fullName, String email, String message) {
+    @Async("emailTaskExecutor")
+    @Retryable(
+            retryFor = EmailDeliveryException.class,
+            maxAttemptsExpression = "${app.email.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.email.retry.initial-delay-ms:2000}",
+                    multiplierExpression = "${app.email.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.email.retry.max-delay-ms:15000}"
+            )
+    )
+    public void notifyContactAsync(String fullName, String email, String message) {
         if (!StringUtils.hasText(ownerEmail)) {
             log.warn("OWNER_EMAIL is not configured. Skipping contact notification.");
             return;
         }
-        sendOptional(
+        sendRequired(
                 ownerEmail,
                 "Portfolio contact message",
                 """
@@ -127,12 +161,19 @@ public class EmailService {
         }
     }
 
-    private void sendOptional(String to, String subject, String body) {
-        try {
-            sendRequired(to, subject, body);
-        } catch (EmailDeliveryException exception) {
-            log.warn("Optional email notification failed: {}", exception.getMessage());
-        }
+    @Recover
+    public void recoverOtp(EmailDeliveryException exception, String to, String otp) {
+        log.error("OTP email delivery failed after retries for {}. The recruiter can request a new OTP.", to, exception);
+    }
+
+    @Recover
+    public void recoverOwnerNotification(EmailDeliveryException exception, RecruiterDetails recruiter) {
+        log.warn("Owner notification failed after retries for recruiterId={}: {}", recruiter.getId(), exception.getMessage());
+    }
+
+    @Recover
+    public void recoverContactNotification(EmailDeliveryException exception, String fullName, String email, String message) {
+        log.warn("Contact notification failed after retries for email={}: {}", email, exception.getMessage());
     }
 
     private boolean isTimeout(Exception exception) {

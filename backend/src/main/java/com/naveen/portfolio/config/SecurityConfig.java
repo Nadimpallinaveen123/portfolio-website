@@ -50,6 +50,8 @@ public class SecurityConfig {
                                 "/favicon.ico",
                                 "/robots.txt",
                                 "/sitemap.xml",
+                                "/actuator/health/**",
+                                "/actuator/info",
                                 "/api/admin/login",
                                 "/api/otp/**",
                                 "/api/resume/**",

@@ -610,8 +610,8 @@ function ResumeDownloadModal({ open, onClose }) {
       const response = await resumeApi.requestOtp(form);
       setRecruiterId(response.data.recruiterId);
       setStep('otp');
-      setStatus('OTP sent to recruiter email.');
-      showToast('success', 'OTP sent successfully. Please check the recruiter email.');
+      setStatus(response.data.message || 'OTP request accepted. Please check your email shortly.');
+      showToast('success', response.data.message || 'OTP request accepted. Please check your email shortly.');
     } catch (error) {
       const message = apiError(error, 'Unable to Send OTP');
       setStatus(message);

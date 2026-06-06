@@ -12,6 +12,20 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/portfolio}
     username: ${SPRING_DATASOURCE_USERNAME:portfolio_user}
     password: ${SPRING_DATASOURCE_PASSWORD:portfolio_pass}
+    hikari:
+      pool-name: PortfolioHikariPool
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:5}
+      minimum-idle: ${DB_POOL_MIN_IDLE:1}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT_MS:30000}
+      validation-timeout: ${DB_VALIDATION_TIMEOUT_MS:5000}
+      idle-timeout: ${DB_IDLE_TIMEOUT_MS:600000}
+      max-lifetime: ${DB_MAX_LIFETIME_MS:1800000}
+      keepalive-time: ${DB_KEEPALIVE_TIME_MS:300000}
+      initialization-fail-timeout: 0
+      connection-test-query: SELECT 1
+      data-source-properties:
+        tcpKeepAlive: true
+        ApplicationName: naveen-portfolio-render
     # Jakarta persistence URL fallback (some Hibernate versions look for this key)
     jakarta:
       persistence:
@@ -38,9 +52,12 @@ spring:
       mail:
         smtp:
           auth: true
-          connectiontimeout: 10000
-          timeout: 10000
-          writetimeout: 10000
+          connectiontimeout: ${SMTP_CONNECTION_TIMEOUT_MS:15000}
+          timeout: ${SMTP_READ_TIMEOUT_MS:15000}
+          writetimeout: ${SMTP_WRITE_TIMEOUT_MS:15000}
+          pool: true
+          "pool.size": ${SMTP_POOL_SIZE:3}
+          quitwait: false
           starttls:
             enable: true
             required: true
@@ -57,8 +74,40 @@ app:
     username: ${ADMIN_USERNAME:admin}
     password: ${ADMIN_PASSWORD:change-this-admin-password}
   owner-email: ${OWNER_EMAIL:nadimpallinaveen2@gmail.com}
+  email:
+    async:
+      core-pool-size: ${EMAIL_ASYNC_CORE_POOL_SIZE:2}
+      max-pool-size: ${EMAIL_ASYNC_MAX_POOL_SIZE:4}
+      queue-capacity: ${EMAIL_ASYNC_QUEUE_CAPACITY:100}
+    retry:
+      max-attempts: ${EMAIL_RETRY_MAX_ATTEMPTS:3}
+      initial-delay-ms: ${EMAIL_RETRY_INITIAL_DELAY_MS:2000}
+      max-delay-ms: ${EMAIL_RETRY_MAX_DELAY_MS:15000}
+      multiplier: ${EMAIL_RETRY_MULTIPLIER:2.0}
+  database:
+    retry:
+      max-attempts: ${DB_RETRY_MAX_ATTEMPTS:3}
+      initial-delay-ms: ${DB_RETRY_INITIAL_DELAY_MS:1000}
+      max-delay-ms: ${DB_RETRY_MAX_DELAY_MS:8000}
+      multiplier: ${DB_RETRY_MULTIPLIER:2.0}
   resume:
     classpath-location: resume/NaveenNadimpalli_JFS_updated_resume.pdf
+
+logging:
+  level:
+    com.naveen.portfolio: INFO
+    com.zaxxer.hikari: INFO
+    org.springframework.mail: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 springdoc:
   swagger-ui:

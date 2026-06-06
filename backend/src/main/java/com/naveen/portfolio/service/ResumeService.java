@@ -14,7 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.TransientDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +53,15 @@ public class ResumeService {
         this.resumeClasspathLocation = resumeClasspathLocation;
     }
 
+    @Retryable(
+            retryFor = {TransientDataAccessException.class, DataAccessResourceFailureException.class},
+            maxAttemptsExpression = "${app.database.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.database.retry.initial-delay-ms:1000}",
+                    multiplierExpression = "${app.database.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.database.retry.max-delay-ms:8000}"
+            )
+    )
     @Transactional
     public Long requestOtp(ResumeOtpRequest request) {
         log.info("OTP request received for email={} company={}", request.email(), request.companyName());
@@ -65,11 +78,20 @@ public class ResumeService {
         recruiter.setOtpExpiresAt(OffsetDateTime.now().plusMinutes(5));
 
         RecruiterDetails saved = recruiterRepository.save(recruiter);
-        emailService.sendOtp(saved.getEmail(), otp);
-        log.info("OTP generated and sent for recruiterId={}", saved.getId());
+        emailService.sendOtpAsync(saved.getEmail(), otp);
+        log.info("OTP generated and queued for recruiterId={}", saved.getId());
         return saved.getId();
     }
 
+    @Retryable(
+            retryFor = {TransientDataAccessException.class, DataAccessResourceFailureException.class},
+            maxAttemptsExpression = "${app.database.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.database.retry.initial-delay-ms:1000}",
+                    multiplierExpression = "${app.database.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.database.retry.max-delay-ms:8000}"
+            )
+    )
     @Transactional
     public String verifyOtp(VerifyOtpRequest request) {
         RecruiterDetails recruiter = recruiterRepository.findById(request.recruiterId())
@@ -88,11 +110,20 @@ public class ResumeService {
         recruiter.setOtpVerified(true);
         recruiter.setOtpHash(null);
         recruiter.setOtpExpiresAt(null);
-        emailService.notifyOwner(recruiter);
+        emailService.notifyOwnerAsync(recruiter);
         log.info("OTP verified for recruiterId={}", recruiter.getId());
         return jwtService.createDownloadToken(recruiter.getId());
     }
 
+    @Retryable(
+            retryFor = {TransientDataAccessException.class, DataAccessResourceFailureException.class},
+            maxAttemptsExpression = "${app.database.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.database.retry.initial-delay-ms:1000}",
+                    multiplierExpression = "${app.database.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.database.retry.max-delay-ms:8000}"
+            )
+    )
     @Transactional
     public Resource downloadResume(String token, String ipAddress) {
         Long recruiterId = jwtService.recruiterIdFromDownloadToken(token);

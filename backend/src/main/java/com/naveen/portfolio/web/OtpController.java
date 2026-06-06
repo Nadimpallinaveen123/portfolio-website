@@ -24,7 +24,7 @@ public class OtpController {
     @PostMapping("/send")
     public OtpRequestedResponse send(@Valid @RequestBody ResumeOtpRequest request) {
         Long recruiterId = resumeService.requestOtp(request);
-        return new OtpRequestedResponse(recruiterId, "OTP sent successfully");
+        return new OtpRequestedResponse(recruiterId, "OTP request accepted. Please check your email shortly.");
     }
 
     @PostMapping("/verify")
@@ -33,4 +33,3 @@ public class OtpController {
         return new OtpVerifiedResponse(token, "OTP verified successfully");
     }
 }
-

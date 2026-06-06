@@ -5,7 +5,7 @@ services:
     rootDir: backend
     dockerfilePath: ./Dockerfile
     plan: free
-    healthCheckPath: /api/analytics/metrics
+    healthCheckPath: /actuator/health/liveness
     envVars:
       - key: SPRING_DATASOURCE_URL
         sync: false
@@ -27,6 +27,22 @@ services:
         sync: false
       - key: ALLOWED_ORIGINS
         value: https://portfolio-website-1.onrender.com,https://portfolio-website-26h7.onrender.com
+      - key: DB_POOL_MAX_SIZE
+        value: "5"
+      - key: DB_POOL_MIN_IDLE
+        value: "1"
+      - key: DB_KEEPALIVE_TIME_MS
+        value: "300000"
+      - key: SMTP_CONNECTION_TIMEOUT_MS
+        value: "15000"
+      - key: SMTP_READ_TIMEOUT_MS
+        value: "15000"
+      - key: SMTP_WRITE_TIMEOUT_MS
+        value: "15000"
+      - key: EMAIL_RETRY_MAX_ATTEMPTS
+        value: "3"
+      - key: DB_RETRY_MAX_ATTEMPTS
+        value: "3"
   - type: web
     name: portfolio-website-1
     runtime: static

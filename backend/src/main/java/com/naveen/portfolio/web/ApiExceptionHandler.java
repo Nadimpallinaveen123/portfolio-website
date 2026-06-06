@@ -42,14 +42,16 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(EmailDeliveryException.class)
     public ResponseEntity<MessageResponse> email(EmailDeliveryException exception) {
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new MessageResponse(exception.getMessage()));
+        log.warn("Email delivery failed after retries: {}", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.ACCEPTED)
+                .body(new MessageResponse("Your request was received. Email delivery is taking longer than usual, so please wait a moment and try again if the OTP does not arrive."));
     }
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<MessageResponse> database(DataAccessException exception) {
-        log.error("Database operation failed. Check PostgreSQL/Supabase connection and datasource environment variables.", exception);
+        log.error("Database operation failed after retries. Check PostgreSQL/Supabase connectivity and datasource environment variables.", exception);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                .body(new MessageResponse("Database unavailable. Start PostgreSQL or check datasource configuration."));
+                .body(new MessageResponse("Service is warming up. Please retry in a few seconds."));
     }
 
     @ExceptionHandler(NoResourceFoundException.class)

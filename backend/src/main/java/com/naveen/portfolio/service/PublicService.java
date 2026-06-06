@@ -10,6 +10,10 @@ import com.naveen.portfolio.repository.VisitorEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.TransientDataAccessException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,13 +38,22 @@ public class PublicService {
         this.emailService = emailService;
     }
 
+    @Retryable(
+            retryFor = {TransientDataAccessException.class, DataAccessResourceFailureException.class},
+            maxAttemptsExpression = "${app.database.retry.max-attempts:3}",
+            backoff = @Backoff(
+                    delayExpression = "${app.database.retry.initial-delay-ms:1000}",
+                    multiplierExpression = "${app.database.retry.multiplier:2.0}",
+                    maxDelayExpression = "${app.database.retry.max-delay-ms:8000}"
+            )
+    )
     public void saveContact(ContactRequest request) {
         ContactMessage message = new ContactMessage();
         message.setFullName(request.fullName().trim());
         message.setEmail(request.email().trim().toLowerCase());
         message.setMessage(request.message().trim());
         contactRepository.save(message);
-        emailService.notifyContact(message.getFullName(), message.getEmail(), message.getMessage());
+        emailService.notifyContactAsync(message.getFullName(), message.getEmail(), message.getMessage());
     }
 
     public void trackVisit(String path, String ipAddress, String userAgent) {
