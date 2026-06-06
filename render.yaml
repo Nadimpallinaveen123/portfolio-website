@@ -25,4 +25,16 @@ services:
       - key: OWNER_EMAIL
         sync: false
       - key: ALLOWED_ORIGINS
-        sync: false
+        value: https://portfolio-website-1.onrender.com
+  - type: web
+    name: portfolio-website-1
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://portfolio-website-26h7.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
