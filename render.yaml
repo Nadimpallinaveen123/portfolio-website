@@ -31,6 +31,7 @@ services:
   - type: web
     name: portfolio-website-1
     runtime: static
+    rootDir: .
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
     envVars:
@@ -38,5 +39,5 @@ services:
         value: https://portfolio-website-26h7.onrender.com/api
     routes:
       - type: rewrite
-        source: /*
+        source: "/*"
         destination: /index.html
