@@ -9,11 +9,15 @@ import {
   Code2,
   Database,
   GitBranch,
+  GraduationCap,
   Layers3,
   MessageSquareText,
+  Rocket,
   ServerCog,
   ShieldCheck,
+  Sparkles,
   Smartphone,
+  Target,
   Workflow
 } from 'lucide-react';
 
@@ -211,29 +215,107 @@ export const projects = [
 
 export const serviceOfferings = [
   {
-    title: 'Full Stack Web Applications',
+    title: 'Freelance Development Services',
     icon: Code2,
-    summary: 'End-to-end business web apps using Spring Boot, React, REST APIs, authentication, and database-backed workflows.',
-    items: ['Admin dashboards', 'Customer portals', 'Role-based access', 'Responsive UI']
+    summary: 'Custom Java, Spring Boot, React, database, integration, and production support services for real business applications.',
+    items: [
+      'Custom Java Application Development',
+      'Spring Boot REST API Development',
+      'Microservices Architecture',
+      'React.js Frontend Development',
+      'Full Stack Web Application Development',
+      'Spring Security & JWT Authentication',
+      'PostgreSQL & MySQL Database Design',
+      'Apache Kafka Integration',
+      'Third-Party API Integrations',
+      'Bug Fixing & Performance Optimization',
+      'Application Maintenance & Production Support'
+    ]
   },
   {
-    title: 'Backend API Development',
-    icon: ServerCog,
-    summary: 'Production-ready Java APIs with validation, security, persistence, and clean service boundaries.',
-    items: ['Spring Boot APIs', 'JWT security', 'PostgreSQL/MySQL', 'API documentation']
-  },
-  {
-    title: 'Cloud Deployment Support',
+    title: 'Cloud, Deployment & Hosting Services',
     icon: Cloud,
-    summary: 'Deployment setup and troubleshooting for Java and React applications on cloud platforms.',
-    items: ['Render deployment', 'Docker setup', 'Environment variables', 'Production debugging']
+    summary: 'Deployment, hosting, CI/CD, Docker, domain, SSL, and production environment setup for Java and React applications.',
+    items: [
+      'AWS Cloud Deployment',
+      'Docker Containerization',
+      'Render Deployment',
+      'Vercel Deployment',
+      'CI/CD Pipeline Setup',
+      'Domain Configuration & Hosting',
+      'SSL Configuration',
+      'Production Environment Setup',
+      'GitHub & Git Workflow Management'
+    ]
   },
   {
-    title: 'Maintenance & Enhancements',
-    icon: Workflow,
-    summary: 'Feature additions, bug fixes, performance improvements, and production issue analysis for existing apps.',
-    items: ['Bug fixing', 'Feature delivery', 'Code cleanup', 'Release support']
+    title: 'Spring AI & Modern AI Solutions',
+    icon: Sparkles,
+    summary: 'AI-enabled Java applications using Spring Boot, Spring AI, OpenAI APIs, chatbots, RAG, and business automation ideas.',
+    items: [
+      'Spring AI Application Development',
+      'OpenAI API Integration',
+      'AI-Powered Chatbots',
+      'Resume Analysis Applications',
+      'AI-Based Business Solutions',
+      'Retrieval-Augmented Generation (RAG)',
+      'AI Integration with Spring Boot Applications'
+    ]
+  },
+  {
+    title: 'Java Full Stack Training & Mentoring',
+    icon: GraduationCap,
+    summary: 'Daily one-hour online training sessions for students, freshers, and working professionals with real-time projects.',
+    items: [
+      'Core Java & Advanced Java',
+      'Collections & Multithreading',
+      'Spring Boot & Spring Security',
+      'Hibernate & JPA',
+      'REST APIs & Microservices',
+      'React.js Development',
+      'Database Design & SQL',
+      'Git & GitHub',
+      'Docker & Deployment',
+      'Real-Time Project Development'
+    ]
+  },
+  {
+    title: 'Career & Interview Preparation',
+    icon: Target,
+    summary: 'Career planning, interview preparation, profile improvement, mock interview support, and job-switching guidance.',
+    items: [
+      'Data Structures & Algorithms (DSA)',
+      'Coding Interview Preparation',
+      'System Design Basics',
+      'Resume Building',
+      'LinkedIn Profile Optimization',
+      'Mock Interviews',
+      'Career Roadmap Planning'
+    ]
+  },
+  {
+    title: 'Availability',
+    icon: Rocket,
+    summary: 'Available for freelance delivery, one-on-one mentoring, technical training, career guidance, and Spring AI consulting.',
+    items: [
+      'Freelance Projects',
+      'One-on-One Mentoring',
+      'Java Full Stack Training',
+      'Corporate Training Programs',
+      'Career Guidance & Interview Preparation',
+      'Spring AI Consulting'
+    ]
   }
+];
+
+export const serviceHighlights = [
+  '4.5+ Years of Industry Experience',
+  'Real-Time Project Exposure',
+  'Practical Hands-On Training',
+  'Industry-Oriented Curriculum',
+  'Personalized Mentoring',
+  'End-to-End Development Support',
+  'Freelancing & Career Guidance'
 ];
 
 export const navItems = [
