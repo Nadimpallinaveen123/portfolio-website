@@ -38,12 +38,17 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/",
+                                "/index.html",
                                 "/about",
                                 "/skills",
                                 "/experience",
                                 "/projects",
                                 "/contact",
                                 "/admin",
+                                "/assets/**",
+                                "/favicon.ico",
+                                "/robots.txt",
+                                "/sitemap.xml",
                                 "/api/admin/login",
                                 "/api/otp/**",
                                 "/api/resume/**",

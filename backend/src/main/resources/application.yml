@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8080}
+  port: ${PORT:10000}
 
 spring:
   application:
@@ -46,10 +46,8 @@ spring:
             required: true
 
 app:
-  frontend:
-    url: ${FRONTEND_URL:https://portfolio-website-1.onrender.com}
   cors:
-    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,https://portfolio-website-1.onrender.com}
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,https://portfolio-website-1.onrender.com,https://portfolio-website-26h7.onrender.com}
   jwt:
     secret: ${JWT_SECRET:change-this-local-development-secret-change-this-local-development-secret}
     issuer: naveen-portfolio
