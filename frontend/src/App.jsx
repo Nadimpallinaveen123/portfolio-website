@@ -236,7 +236,7 @@ function HomePage({ onResume }) {
                   <p className="text-sm font-bold uppercase text-teal-100">Available for opportunities</p>
                   <p className="mt-2 text-lg font-black">Java Full Stack Specialist</p>
                   <p className="mt-2 text-sm leading-6 text-slate-200">
-                    ✨ Java Full Stack Developer | Microservices & Cloud Innovator | AI-Driven Productivity
+                    ✨  Java Full Stack Developer | Microservices & Cloud Innovator | AI-Driven Productivity
                   </p>
                 </div>
               </div>
