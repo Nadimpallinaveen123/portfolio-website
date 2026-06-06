@@ -46,6 +46,8 @@ spring:
             required: true
 
 app:
+  frontend:
+    url: ${FRONTEND_URL:https://portfolio-website-1.onrender.com}
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,https://portfolio-website-1.onrender.com}
   jwt:

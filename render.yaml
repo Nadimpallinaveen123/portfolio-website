@@ -24,6 +24,8 @@ services:
         sync: false
       - key: OWNER_EMAIL
         sync: false
+      - key: FRONTEND_URL
+        value: https://portfolio-website-1.onrender.com
       - key: ALLOWED_ORIGINS
         value: https://portfolio-website-1.onrender.com
   - type: web
